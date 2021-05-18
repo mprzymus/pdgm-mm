@@ -1,8 +1,9 @@
 package Actors
 
-import Actors.Player.{MakeMove, Move}
-import Actors.Server.BadMove
+import Actors.Player.{AvgResult, MakeMove, Move}
+import Actors.Server.{Avg, BadMove}
 import GameObjects.AI.MoveDecider
+import GameObjects.AI.minimax.MinMaxAlgorithm
 import akka.actor.Actor
 
 class Player(val playerDecider: MoveDecider) extends Actor {
@@ -11,6 +12,12 @@ class Player(val playerDecider: MoveDecider) extends Actor {
       makeMove()
     case BadMove() =>
       makeMove()
+    case Avg(time) =>
+      playerDecider match {
+        case algorithm: MinMaxAlgorithm =>
+          context.parent ! AvgResult(algorithm.getNodesAvg, algorithm.getTimeAvg(time))
+        case _ => throw new UnsupportedOperationException()
+      }
   }
 
   private def makeMove(): Unit = {
@@ -29,6 +36,6 @@ class Player(val playerDecider: MoveDecider) extends Actor {
 object Player {
 
   case class MakeMove()
-
-  case class Move(house: Int) //to consider making houses enum
+  case class AvgResult(avgNodes: Double, avgTime: Double)
+  case class Move(house: Int)
 }

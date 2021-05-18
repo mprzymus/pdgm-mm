@@ -157,6 +157,15 @@ class Board(seedsInPit: Int) {
       toReturn.pits(i) = pits(i)
     toReturn
   }
+
+  def winning: PlayerPosition = {
+    if (playerUpperScore > playerLowerScore) {
+      PlayerUpper()
+    }
+    else {
+      PlayerLower()
+    }
+  }
 }
 
 object Board {

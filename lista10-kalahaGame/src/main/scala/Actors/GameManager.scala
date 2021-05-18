@@ -1,8 +1,9 @@
 package Actors
 
-import GameObjects.AI.minimax.{FixedDepth, MinMaxAlgorithm}
+import GameObjects.AI.evaluation.EvaluationByResult
+import GameObjects.AI.minimax.{AlphaBetaVisitor, FixedDepth, MinMaxAlgorithm, MiniMaxVisitor}
 import GameObjects.AI.{HumanPlayer, MoveDecider}
-import GameObjects.Outputs.ConsoleOutput
+import GameObjects.Outputs.{ConsoleOutput, NoOutput}
 import GameObjects.Utilities._
 import akka.actor.{Actor, Props}
 
@@ -24,8 +25,8 @@ class GameManager extends Actor{
       val playerB = if (playerBIn == "h") new HumanPlayer(board) else getAi(PlayerLower(), board)
       firstRandomMove(board)
       val output = new ConsoleOutput(board)
-      output.printGame()
-      context.actorOf(Props(classOf[Server], playerA, playerB, board, Long.MaxValue: Long, output))
+      //output.printGame()
+      context.actorOf(Props(classOf[Server], playerA, playerB, board, Long.MaxValue: Long, NoOutput()))
     }
   }
 
@@ -40,7 +41,8 @@ class GameManager extends Actor{
   def getAi(position: PlayerPosition, board: Board): MoveDecider = {
     println("Ai depth:")
     val depth = StdIn.readInt()
-    new MinMaxAlgorithm(board, position, new FixedDepth(depth))
+    val algorithm = new MiniMaxVisitor(new EvaluationByResult)
+    new MinMaxAlgorithm(board, position, new FixedDepth(depth), aiAlgorithm = algorithm)
   }
 
   override def receive: Receive = {
