@@ -1,14 +1,14 @@
 package GameObjects.AI.minimax
 
-import GameObjects.AI.evaluation.{EvaluationByResult, FakeEvaluationStrategy}
+import GameObjects.AI.evaluation.EvaluationByResult
 import GameObjects.Outputs.ConsoleOutput
-import GameObjects.Utilities.{Board, PlayerLower, PlayerUpper}
+import GameObjects.Utilities.{Board, GameFinished, PlayerLower, PlayerUpper}
 import org.scalatest.funsuite.AnyFunSuite
 
-class MiniMaxVisitorTest extends AnyFunSuite {
-
-  val miniMaxVisitor: MiniMaxVisitor = new MiniMaxVisitor(new EvaluationByResult)
+class AlphaBetaVisitorTest extends AnyFunSuite {
+  val miniMaxVisitor: MiniMaxVisitor = new AlphaBetaVisitor(new EvaluationByResult)
   val miniMaxAlgorithm = new MinMaxAlgorithm(new Board(1), PlayerLower(), new FixedDepth(3))
+
 
   test("should take test") {
     val board = new Board(0)
@@ -42,5 +42,21 @@ class MiniMaxVisitorTest extends AnyFunSuite {
     val result = miniMaxVisitor.minimax(4, PlayerLower(), board)
 
     assert(result == 5)
+  }
+
+  test("game test") {
+    val board = new Board(4)
+    val depth = 8
+    val miniMaxVisitorToCompare = new MiniMaxVisitor(new EvaluationByResult())
+    board.toMove = PlayerLower()
+    val output = new ConsoleOutput(board)
+
+    while (board.toMove != GameFinished()) {
+      output.printGame()
+      val result = miniMaxVisitor.minimax(depth, board.toMove, board)
+      val controlled = miniMaxVisitorToCompare.minimax(depth, board.toMove, board)
+      assert(result == controlled)
+      board.move(result, board.toMove)
+    }
   }
 }
