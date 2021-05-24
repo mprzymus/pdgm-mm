@@ -55,8 +55,7 @@ class Server(playerA: MoveDecider, playerB: MoveDecider, private val board: Boar
           sender() ! BadMove()
       }
     case avg: AvgResult =>
-      println(s"winner nodes avg    = ${avg.avgNodes}")
-      println(s"winner time avg[ms] = ${avg.avgTime}")
+      println(s"${avg.avgNodes}; ${avg.avgTime}; ${avg.moves}")
       context.parent ! GameFinished()
     case GameFinished(_) =>
       finishGame()
@@ -86,8 +85,6 @@ class Server(playerA: MoveDecider, playerB: MoveDecider, private val board: Boar
 }
 
 object Server {
-
   case class BadMove()
-
   case class Avg(time: Long)
 }

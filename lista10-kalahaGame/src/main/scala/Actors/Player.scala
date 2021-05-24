@@ -15,7 +15,7 @@ class Player(val playerDecider: MoveDecider) extends Actor {
     case Avg(time) =>
       playerDecider match {
         case algorithm: MinMaxAlgorithm =>
-          context.parent ! AvgResult(algorithm.getNodesAvg, algorithm.getTimeAvg(time))
+          context.parent ! AvgResult(algorithm.getNodesAvg, algorithm.getTimeAvg(time), algorithm.moves)
         case _ => throw new UnsupportedOperationException()
       }
   }
@@ -36,6 +36,6 @@ class Player(val playerDecider: MoveDecider) extends Actor {
 object Player {
 
   case class MakeMove()
-  case class AvgResult(avgNodes: Double, avgTime: Double)
+  case class AvgResult(avgNodes: Double, avgTime: Double, moves: Int)
   case class Move(house: Int)
 }

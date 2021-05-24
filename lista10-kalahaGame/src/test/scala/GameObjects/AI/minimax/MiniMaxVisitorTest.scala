@@ -39,7 +39,7 @@ class MiniMaxVisitorTest extends AnyFunSuite {
     pits(10) = 1000
     new ConsoleOutput(board).printGame()
 
-    val result = miniMaxVisitor.minimax(4, PlayerLower(), board)
+    val result = miniMaxVisitor.minimax(3, PlayerLower(), board)
 
     assert(result == 5)
   }

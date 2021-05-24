@@ -39,14 +39,14 @@ class AlphaBetaVisitorTest extends AnyFunSuite {
     pits(10) = 1000
     new ConsoleOutput(board).printGame()
 
-    val result = miniMaxVisitor.minimax(4, PlayerLower(), board)
+    val result = miniMaxVisitor.minimax(3, PlayerLower(), board)
 
     assert(result == 5)
   }
 
   test("game test") {
     val board = new Board(4)
-    val depth = 8
+    val depth = 4
     val miniMaxVisitorToCompare = new MiniMaxVisitor(new EvaluationByResult())
     board.toMove = PlayerLower()
     val output = new ConsoleOutput(board)

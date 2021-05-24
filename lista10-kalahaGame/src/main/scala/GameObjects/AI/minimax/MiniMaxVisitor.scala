@@ -35,7 +35,9 @@ class MiniMaxVisitor(protected val evaluationStrategy: EvaluationStrategy, prote
 
   def minimax(depth: Int, player: PlayerPosition, board: Board): Int = {
     maxPlayerPosition = player
-    val children = (0 to nodeChildrenNumber).map(child => minimax(depth, player, board.clone(), child, Int.MinValue, Int.MaxValue))
+    val children = (0 to nodeChildrenNumber).map(child =>
+      minimax(depth, player, board.clone(), child, Int.MinValue, Int.MaxValue)
+    )
     children.indices.maxBy(children)
   }
 

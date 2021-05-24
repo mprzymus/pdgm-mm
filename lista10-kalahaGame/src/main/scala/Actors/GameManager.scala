@@ -41,7 +41,7 @@ class GameManager extends Actor{
   def getAi(position: PlayerPosition, board: Board): MoveDecider = {
     println("Ai depth:")
     val depth = StdIn.readInt()
-    val algorithm = new MiniMaxVisitor(new EvaluationByResult)
+    val algorithm = new AlphaBetaVisitor(new EvaluationByResult)
     new MinMaxAlgorithm(board, position, new FixedDepth(depth), aiAlgorithm = algorithm)
   }
 
