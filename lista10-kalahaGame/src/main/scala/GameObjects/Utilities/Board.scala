@@ -108,7 +108,7 @@ class Board(seedsInPit: Int) {
   }
 
   private def endOfGame() = {
-    sumPoints(toMove) == 0
+    sumStonesInHouses(toMove) == 0
   }
 
   private def findRealIndex(index: Int, player: PlayerPosition) = {
@@ -137,10 +137,10 @@ class Board(seedsInPit: Int) {
     else storeA
   }
 
-  private def sumPoints(player: PlayerPosition) = playerPits(player).sum
+  def sumStonesInHouses(player: PlayerPosition): Int = playerPits(player).sum
 
   private def finishGame: PlayerPosition = {
-    pits(playersStoreIndex(toMove.opponent)) += sumPoints(toMove) + sumPoints(toMove.opponent)
+    pits(playersStoreIndex(toMove.opponent)) += sumStonesInHouses(toMove) + sumStonesInHouses(toMove.opponent)
     for (i <- 0 to storeB) {
       if (!(i == storeA || i == storeB)) {
         pits(i) = 0
