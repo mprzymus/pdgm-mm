@@ -19,10 +19,18 @@ class MeasureVsFirstLegal(callback: Callback, visitorA: MiniMaxVisitor, firstRan
   private def playGame(): Unit = {
     //println("Game started")
     val board = new Board(4)
-    val playerA = if (firstRandom) {getFirstLegal(PlayerUpper(), board)}
-    else {getAi(PlayerUpper(), board, visitorA)}
-    val playerB = if (firstRandom) {getAi(PlayerLower(), board, visitorA)}
-    else {getFirstLegal(PlayerLower(), board)}
+    val playerA = if (firstRandom) {
+      getFirstLegal(PlayerUpper(), board)
+    }
+    else {
+      getAi(PlayerUpper(), board, visitorA)
+    }
+    val playerB = if (firstRandom) {
+      getAi(PlayerLower(), board, visitorA)
+    }
+    else {
+      getFirstLegal(PlayerLower(), board)
+    }
     context.actorOf(Props(classOf[Server], playerA, playerB, board, Long.MaxValue: Long, new ResultOutput()))
   }
 

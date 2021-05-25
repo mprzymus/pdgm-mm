@@ -1,4 +1,4 @@
-package GameObjects.Utilities
+package GameObjects.Utilities.heursitics
 
 import GameObjects.AI.minimax.MiniMaxVisitor
 

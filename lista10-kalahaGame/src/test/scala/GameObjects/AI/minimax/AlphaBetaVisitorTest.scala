@@ -20,10 +20,10 @@ class AlphaBetaVisitorTest extends AnyFunSuite {
       pits(i * 2 + 9) = 100 / (i * 10 + 1)
 
 
-    val resultForWinner = miniMaxVisitor.minimax(5, PlayerLower(), board)
+    val resultForWinner = miniMaxVisitor.minimax(6, PlayerLower(), board)
     new ConsoleOutput(board).printGame()
     board.toMove = PlayerUpper()
-    val resultForLoser = miniMaxVisitor.minimax(5, PlayerUpper(), board)
+    val resultForLoser = miniMaxVisitor.minimax(6, PlayerUpper(), board)
 
     assert(resultForWinner == 2)
     assert(resultForLoser == 2)
@@ -46,13 +46,13 @@ class AlphaBetaVisitorTest extends AnyFunSuite {
 
   test("game test") {
     val board = new Board(4)
-    val depth = 4
+    val depth = 8
     val miniMaxVisitorToCompare = new MiniMaxVisitor(new EvaluationByResult())
     board.toMove = PlayerLower()
     val output = new ConsoleOutput(board)
 
     while (board.toMove != GameFinished()) {
-      output.printGame()
+      //output.printGame()
       val result = miniMaxVisitor.minimax(depth, board.toMove, board)
       val controlled = miniMaxVisitorToCompare.minimax(depth, board.toMove, board)
       assert(result == controlled)

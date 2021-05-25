@@ -1,4 +1,6 @@
-package GameObjects.Utilities
+package GameObjects.Utilities.heursitics
+
+import GameObjects.Utilities.{Callback, TestData}
 
 class HeuristicsCallback(list: List[TestData], heuristicComparison: HeuristicComparison) extends Callback {
   override def callBack(): Unit = {

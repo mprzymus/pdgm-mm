@@ -1,8 +1,9 @@
-package GameObjects.Utilities
+package GameObjects.Utilities.heursitics
 
 import Actors.MeasureVsFirstLegal
 import GameObjects.AI.evaluation.{EvaluatePromoteStones, EvaluationByResult, EvaluationPromoteEmptyPits}
 import GameObjects.AI.minimax.AlphaBetaVisitor
+import GameObjects.Utilities.Callback
 import akka.actor.{ActorSystem, Props}
 
 class FirstLegalMeasure {
@@ -34,11 +35,11 @@ class FirstLegalMeasure {
     val depth = 11
     val testData = List(
       new FirstLegalTestData(depth, diffVisitor, true, numberOfGame),
-      new FirstLegalTestData(depth, diffVisitor, false, numberOfGame),
+      /*new FirstLegalTestData(depth, diffVisitor, false, numberOfGame),
       new FirstLegalTestData(depth, stonesVisitor, true, numberOfGame),
       new FirstLegalTestData(depth, stonesVisitor, false, numberOfGame),
       new FirstLegalTestData(depth, emptyVisitor, true, numberOfGame),
-      new FirstLegalTestData(depth, emptyVisitor, false, numberOfGame),
+      new FirstLegalTestData(depth, emptyVisitor, false, numberOfGame),*/
     )
     performTest(testData)
   }
