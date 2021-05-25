@@ -4,6 +4,7 @@ import Actors.Player.{AvgResult, MakeMove, Move}
 import Actors.Server.{Avg, BadMove}
 import GameObjects.AI.MoveDecider
 import GameObjects.AI.minimax.MinMaxAlgorithm
+import GameObjects.Utilities.PlayerPosition
 import akka.actor.Actor
 
 class Player(val playerDecider: MoveDecider) extends Actor {
@@ -15,7 +16,9 @@ class Player(val playerDecider: MoveDecider) extends Actor {
     case Avg(time) =>
       playerDecider match {
         case algorithm: MinMaxAlgorithm =>
-          context.parent ! AvgResult(algorithm.getNodesAvg, algorithm.getTimeAvg(time), algorithm.moves)
+          val result = AvgResult(algorithm.getNodesAvg, algorithm.getTimeAvg(time), algorithm.moves,
+            algorithm.depthDetermination.determineDepth, algorithm.aisPosition)
+          context.parent ! result
         case _ => throw new UnsupportedOperationException()
       }
   }
@@ -36,6 +39,8 @@ class Player(val playerDecider: MoveDecider) extends Actor {
 object Player {
 
   case class MakeMove()
-  case class AvgResult(avgNodes: Double, avgTime: Double, moves: Int)
+
+  case class AvgResult(avgNodes: Double, avgTime: Double, moves: Int, aiDepth: Int, aiPos: PlayerPosition)
+
   case class Move(house: Int)
 }

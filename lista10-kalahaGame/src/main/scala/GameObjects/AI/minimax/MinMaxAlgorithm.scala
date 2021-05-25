@@ -4,8 +4,8 @@ import GameObjects.AI._
 import GameObjects.AI.evaluation.EvaluationByResult
 import GameObjects.Utilities.{Board, PlayerPosition}
 
-class MinMaxAlgorithm(private val gameBoard: Board, private val aisPosition: PlayerPosition,
-                      private val depthDetermination: DepthDetermination, private val aiAlgorithm: MiniMaxVisitor = new MiniMaxVisitor(new EvaluationByResult))
+class MinMaxAlgorithm(private val gameBoard: Board, val aisPosition: PlayerPosition,
+                      val depthDetermination: DepthDetermination, private val aiAlgorithm: MiniMaxVisitor = new MiniMaxVisitor(new EvaluationByResult))
   extends MoveDecider {
 
   var moves = 0
