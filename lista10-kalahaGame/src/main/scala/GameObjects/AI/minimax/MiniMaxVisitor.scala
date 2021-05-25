@@ -34,11 +34,16 @@ class MiniMaxVisitor(protected val evaluationStrategy: EvaluationStrategy, prote
   }
 
   def minimax(depth: Int, player: PlayerPosition, board: Board): Int = {
+    val children = checkChildren(depth, player, board)
+    children.indices.maxBy(children)
+  }
+
+  def checkChildren(depth: Int, player: _root_.GameObjects.Utilities.PlayerPosition, board: Board): Seq[Int] = {
     maxPlayerPosition = player
     val children = (0 to nodeChildrenNumber).map(child =>
       minimax(depth, player, board.clone(), child, Int.MinValue, Int.MaxValue)
     )
-    children.indices.maxBy(children)
+    children
   }
 
   protected def iterateOverPossibilities(depth: Int, player: PlayerPosition, board: Board, alpha: Int, beta: Int): Seq[Int] = {
