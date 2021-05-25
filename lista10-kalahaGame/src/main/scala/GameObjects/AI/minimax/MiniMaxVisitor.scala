@@ -3,7 +3,7 @@ package GameObjects.AI.minimax
 import GameObjects.AI.evaluation.EvaluationStrategy
 import GameObjects.Utilities.{Board, GameFinished, PlayerPosition}
 
-class MiniMaxVisitor(protected val evaluationStrategy: EvaluationStrategy, protected val nodeChildrenNumber: Int = 5) {
+class MiniMaxVisitor(val evaluationStrategy: EvaluationStrategy, protected val nodeChildrenNumber: Int = 5) {
   protected var maxPlayerPosition: PlayerPosition = _
   protected val defaultBestBrother: Int = 0
   var counter = 0
